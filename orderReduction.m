@@ -33,33 +33,62 @@ switch setType
             end
         end
         obj=zono(reduced_G,obj.c);
-    case 'Constrained Zonotope'    
-        A=obj.A;
-        b=obj.b;
-        c=obj.c;
-        G=obj.G;
-        while true
-            [G,c,A,b,eff_r]=redundancy_remover_conzono(G,c,A,b);
-            if isempty(eff_r)
-                break
-            end       
-            i=length(eff_r);
-            remove_position=eff_r(i);
-            n_c=size(A,1);
-            removable_constraint=0;
-            for idx=1:n_c
-                if A(idx,remove_position)~=0
-                    removable_constraint=idx;
-                    break
-                end
-            end
-            if removable_constraint==0
-            continue;
-            end
-            [G,c,A,b]=constraint_remover_function(G,c,A,b,remove_position,removable_constraint);
-            obj=conZono(G,c,A,b);
-        end
-        obj=conZono(G,c,A,b);
+    case 'Constrained Zonotope'
+        obj=conzono_exact_redundancy_removal(obj);
+        % A=obj.A;
+        % b=obj.b;
+        % c=obj.c;
+        % G=obj.G;
+        % while true
+        %     [G,c,A,b,eff_r]=redundancy_remover_conzono(G,c,A,b);
+        %     if isempty(eff_r)
+        %         verd2=true;
+        %         break   
+        %     end
+        %     i=length(eff_r);
+        %     remove_position=eff_r(i);
+        %     n_c=size(A,1);
+        %     removable_constraint=0;
+        %     for idx=1:n_c
+        %         if A(idx,remove_position)~=0
+        %             removable_constraint=idx;
+        %             break
+        %         end
+        %     end
+        %     if removable_constraint==0
+        %     continue;
+        %     end
+        %     [G,c,A,b]=constraint_remover_function(G,c,A,b,remove_position,removable_constraint);          
+        % end
+        % %obj=conZono(G,c,A,b);
+        % 
+        % while verd2
+        %     if size(A,1)<=1
+        %     break;
+        %     end
+        % 
+        %  [G,c,A,b,eff_r]=redundancy_remover_conzono_LP(G,c,A,b);
+        % 
+        %  if isempty(eff_r) 
+        %      break
+        %  end
+        %  i=length(eff_r);
+        %     remove_position=eff_r(i);
+        %     n_c=size(A,1);
+        %     removable_constraint=0;
+        %     for idx=1:n_c
+        %         if A(idx,remove_position)~=0
+        %             removable_constraint=idx;
+        %             break
+        %         end
+        %     end
+        %     if removable_constraint==0
+        %     continue;
+        %     end
+        %     [G,c,A,b]=constraint_remover_function(G,c,A,b,remove_position,removable_constraint);
+        %     % obj=conZono(G,c,A,b);
+        % end
+        %  obj=conZono(G,c,A,b);
         
     case 'Hybrid Zonotope'
         obj=obj
