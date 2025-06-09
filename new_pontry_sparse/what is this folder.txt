@@ -1,0 +1,1 @@
+Runner.m is the file to be run to load two zonotopes, calculate pontryagin difference between them using both the methods and plot the results. Other functions are functions called by the runner.m. 
